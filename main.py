@@ -52,13 +52,22 @@ def main():
         sys.exit(0)
 
     if command == "query":
-        if len(sys.argv) > 2:
+        # Parse optional --sport flag
+        sport = None
+        args = sys.argv[2:]
+        if "--sport" in args:
+            idx = args.index("--sport")
+            if idx + 1 < len(args):
+                sport = args[idx + 1]
+                args = args[:idx] + args[idx + 2:]
+
+        if args:
             # Single query mode: pass the question as argument
-            question = " ".join(sys.argv[2:])
-            single_query(question)
+            question = " ".join(args)
+            single_query(question, sport=sport)
         else:
             # Interactive mode
-            interactive_query()
+            interactive_query(sport=sport)
         sys.exit(0)
 
 
