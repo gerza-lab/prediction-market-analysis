@@ -10,6 +10,7 @@ from src.analysis import (
 )
 from src.backfill import backfill
 from src.backfill_trades import backfill_trades
+from src.query import interactive_query, single_query
 
 
 def main():
@@ -48,6 +49,16 @@ def main():
 
     if command == "teardown":
         cleanup_data_directory()
+        sys.exit(0)
+
+    if command == "query":
+        if len(sys.argv) > 2:
+            # Single query mode: pass the question as argument
+            question = " ".join(sys.argv[2:])
+            single_query(question)
+        else:
+            # Interactive mode
+            interactive_query()
         sys.exit(0)
 
 
